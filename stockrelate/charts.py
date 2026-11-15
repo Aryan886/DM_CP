@@ -7,17 +7,23 @@ import plotly.graph_objects as go
 from stockrelate.models import AnalysisResult, BoolMatrix, FloatMatrix, Symbols
 
 COMPONENT_COLORS = (
-    "#2f6fb0",
-    "#d9822b",
-    "#3a9a5b",
-    "#c23b3b",
-    "#7d5bb5",
-    "#8c6d46",
-    "#c8559f",
-    "#6b7280",
-    "#a3a332",
-    "#2aa1b3",
+    "#2a5e3f",  # canvas-hero green
+    "#038ff7",  # blue-500
+    "#e0892b",  # warm amber
+    "#8b4fc7",  # plum
+    "#d94f70",  # rose
+    "#1a9e8f",  # teal
+    "#86521e",  # badge brown
+    "#5b6475",  # slate
+    "#8a9a2b",  # olive
+    "#5fb3e8",  # sky
 )
+INK = "#1b1a18"
+HAIRLINE = "#e8e6e1"
+CANVAS_SOFT = "#f4f3f0"
+HIGHLIGHT = "#f5a623"  # warning token: witness premises
+MISSING = "#ee0000"  # error token: missing conclusion pair
+EDGE = "#c9c6bf"
 
 
 def circle_positions(symbols: Symbols) -> dict[str, tuple[float, float]]:
@@ -41,8 +47,7 @@ def correlation_heatmap(symbols: Symbols, correlation: FloatMatrix, title: str) 
             y=labels,
             zmin=-1,
             zmax=1,
-            colorscale="RdBu",
-            reversescale=False,
+            colorscale=[[0.0, "#038ff7"], [0.5, "#f4f3f0"], [1.0, "#2a5e3f"]],
             text=[[f"{value:.3f}" for value in row] for row in correlation],
             texttemplate="%{text}" if len(labels) <= 12 else None,
             hovertemplate="C(%{y}, %{x}) = %{z:.6f}<extra></extra>",
@@ -67,7 +72,7 @@ def boolean_heatmap(
             y=labels,
             zmin=0,
             zmax=1,
-            colorscale=[[0, "#f3f4f6"], [1, "#2f6fb0"]],
+            colorscale=[[0, CANVAS_SOFT], [1, INK]],
             showscale=False,
             text=text,
             texttemplate="%{text}",
@@ -83,7 +88,7 @@ def boolean_heatmap(
             x1=labels.index(target) + 0.5,
             y0=labels.index(source) - 0.5,
             y1=labels.index(source) + 0.5,
-            line={"color": "#facc15", "width": 3},
+            line={"color": HIGHLIGHT, "width": 3},
         )
     return _square_layout(figure, title)
 
@@ -124,7 +129,7 @@ def relation_graph(
                 x=[x0, x1],
                 y=[y0, y1],
                 mode="lines",
-                line={"color": "#facc15" if is_highlight else "#9ca3af", "width": 5 if is_highlight else 2},
+                line={"color": HIGHLIGHT if is_highlight else EDGE, "width": 5 if is_highlight else 1.6},
                 hoverinfo="skip",
                 showlegend=False,
             )
@@ -136,7 +141,7 @@ def relation_graph(
                 x=[x0, x1],
                 y=[y0, y1],
                 mode="lines",
-                line={"color": "#c23b3b", "width": 2, "dash": "dash"},
+                line={"color": MISSING, "width": 2, "dash": "dash"},
                 name=f"missing {source}–{target}",
                 hoverinfo="name",
             )
@@ -154,9 +159,9 @@ def relation_graph(
             text=list(symbols),
             textposition="top center",
             marker={
-                "size": 22,
+                "size": 26,
                 "color": [COMPONENT_COLORS[class_of[s][0] % len(COMPONENT_COLORS)] for s in symbols],
-                "line": {"color": "#111827", "width": 1},
+                "line": {"color": "#fefdfb", "width": 2.5},
             },
             customdata=[
                 [sectors.get(s, ""), len(result.relation.neighbors[s]), class_of[s][1]] for s in symbols

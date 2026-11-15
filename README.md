@@ -1,6 +1,6 @@
 # StockRelate — Sets, Relations and Reachability
 
-An offline Streamlit teaching application for a Discrete Mathematics course. It turns
+A web teaching application for a Discrete Mathematics course. It turns
 stock-return correlations into a binary relation, checks reflexivity, symmetry and
 transitivity with counterexamples, and builds equivalence classes from graph reachability.
 
@@ -28,13 +28,35 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe -m ruff check .
 .\.venv\Scripts\python.exe -m ruff format --check .
-.\.venv\Scripts\python.exe -m streamlit run app.py
+.\.venv\Scripts\python.exe -m uvicorn server:app --port 8501
 ```
+
+Then open <http://localhost:8501>.
 
 On macOS/Linux use `.venv/bin/python` instead of `.\.venv\Scripts\python.exe`.
 
-Pinned, tested versions: streamlit 1.66.1, pandas 3.1.0, numpy 2.5.4, plotly 7.1.0,
-pytest 9.2.0, ruff 0.17.3 (plus yfinance 1.7.0 only for the optional fetch script). No network access, API keys or credentials are needed at runtime.
+Pinned, tested versions: fastapi 0.163.1, uvicorn 0.54.0, pandas 3.1.0, numpy 2.5.4, plotly 7.1.0,
+pytest 9.2.0, httpx 0.28.1, ruff 0.17.3 (plus yfinance 1.7.0 only for the optional fetch script).
+No API keys or credentials are needed. The Python analysis runs fully offline; the browser loads
+the Plus Jakarta Sans font (Google Fonts) and Plotly.js 4.1.1 (jsDelivr) from a CDN, so the page
+needs internet access for those two assets.
+
+## User interface
+
+The frontend follows the Clay design system (`clay-enriched.md`): a warm off-white canvas, a
+deep-green hero with an SVG "clay" graph illustration, one variable sans at weights 400/575,
+12 px rounded-rectangle buttons and 18 px cards, with chartreuse reserved for primary actions.
+
+- **Hero** — the shared threshold slider τ, teaching presets and live node / edge / class counts.
+- **Data drawer** (nav **Data** button or **Choose data**) — source, stock list with filter,
+  price window, CSV upload and **Apply selection**.
+- **Module tabs 1–5** — sticky pills under the nav; each module renders tables, property cards
+  and Clay-themed Plotly charts from the API.
+- **Downloads** and the validation/provenance JSON sit below the modules.
+
+The browser holds the selection and τ; every number comes from the Python API
+(`/api/analyze`, `/api/sets`, `/api/path`, `/api/export/{file}`), which reuses the unchanged
+maths modules. Interactive API docs are at `/api/docs`.
 
 ## Data sources
 
@@ -63,7 +85,7 @@ Fetching needs internet; the app then reads the saved CSVs offline.
 
 Options: `--start`/`--end` (inclusive) and `--tickers` with entries like `AAPL:Technology`
 or `TCS.NS:Technology` (any Yahoo ticker, including Indian `.NS` symbols). Then choose
-**Historical prices** in the sidebar and press **Apply selection**. Yahoo data is for
+**Historical prices** in the **Data** drawer and press **Apply selection**. Yahoo data is for
 personal/educational use; redistribution is not confirmed, so do not publish those CSVs.
 See `data/historical/README.md`.
 
@@ -114,7 +136,8 @@ Downloads (`relation_matrix.csv`, `reachability_matrix.csv`, `ordered_pairs.csv`
 ## Project layout
 
 ```text
-app.py                  Streamlit entry point, session state and invalidation
+server.py               FastAPI app: JSON API + static frontend
+web/                    Clay-styled frontend (index.html, styles.css, app.js — no build step)
 stockrelate/
   config.py             limits and defaults
   models.py             dataclass contracts (PreparedData, RelationResult, ...)
@@ -125,7 +148,7 @@ stockrelate/
   analysis.py           orchestration + consistency checks
   exports.py            CSV/JSON downloads
   charts.py             Plotly figures (fixed circular layout)
-  ui.py                 five tab render functions
+  service.py            JSON payloads for the web API, bounded caches
 data/                   bundled datasets and sources.json
 scripts/                demo-data generator, performance measurement
 tests/                  pytest suite and fixtures

@@ -1,8 +1,9 @@
 # Viva / demo guide (about 8 minutes)
 
-Start the app with `.\.venv\Scripts\python.exe -m streamlit run app.py`. It opens on the
+Start the app with `.\.venv\Scripts\python.exe -m uvicorn server:app --port 8501` and open
+<http://localhost:8501>. It opens on the
 real Yahoo Finance snapshot. For the scripted A–E story below, first pick **Teaching matrix**
-in the sidebar (it applies all five stocks at τ = 0.65). Use the historical source at the end
+in the **Data** drawer (it applies all five stocks at τ = 0.65). Use the historical source at the end
 (see the last row) to show the same ideas on real companies.
 
 | Time | Do | Say |

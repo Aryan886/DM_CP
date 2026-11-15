@@ -81,3 +81,18 @@ In the browser the source applied with 16 nodes and 12 edges at τ = 0.65, no co
 - Running with the network adapter disabled. The app makes no network calls by design
   (`gatherUsageStats = false`, no remote assets), but this was not tested with networking off.
 
+
+## Clay web UI rewrite — 15 November 2026
+
+The Streamlit UI was replaced by a FastAPI server (`server.py`) and a static Clay-styled
+frontend (`web/`). Maths modules are unchanged; chart colours in `charts.py` were retuned.
+
+- `pytest -q`: all tests pass; `tests/test_app.py` now drives the HTTP API with FastAPI's
+  TestClient (teaching matrix 5 / 3 / 2, τ = 0.75 → 3 classes without re-preparing, τ = 0.90 → 0
+  edges, set operations + "use as S", shortest path, bundled source, upload, exports).
+- `ruff check .` and `ruff format --check .`: clean.
+- Built-in browser (mobile 375 px, 560 px and 1200 px emulation): historical source auto-applies
+  16 stocks (16 / 12 / 10 at τ = 0.65); switching to the teaching matrix auto-applies A–E with the
+  (A, B, C) transitivity witness; slider, presets, X/Y chips with "Use as S", pair inspector,
+  shortest path, exports, CSV upload + Apply, and a too-short window error were exercised.
+  No horizontal scroll at 375 px.
