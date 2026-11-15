@@ -1,0 +1,17 @@
+symbol,name,sector
+AAPL,Apple Inc.,Technology
+BAC,Bank of America Corporation,Banking
+C,Citigroup Inc.,Banking
+COP,ConocoPhillips,Energy
+CVX,Chevron Corporation,Energy
+GOOGL,Alphabet Inc. (Class A),Technology
+JPM,JPMorgan Chase & Co.,Banking
+KO,The Coca-Cola Company,Consumer Staples
+MSFT,Microsoft Corporation,Technology
+NVDA,NVIDIA Corporation,Technology
+PEP,"PepsiCo, Inc.",Consumer Staples
+PG,The Procter & Gamble Company,Consumer Staples
+SLB,SLB N.V.,Energy
+WFC,Wells Fargo & Company,Banking
+WMT,Walmart Inc.,Consumer Staples
+XOM,Exxon Mobil Corporation,Energy

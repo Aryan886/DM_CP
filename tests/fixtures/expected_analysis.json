@@ -1,0 +1,135 @@
+{
+  "description": "Expected teaching-matrix analysis at threshold 0.65 (Section 10.2)",
+  "threshold": 0.65,
+  "edges": [
+    [
+      "A",
+      "B"
+    ],
+    [
+      "B",
+      "C"
+    ],
+    [
+      "D",
+      "E"
+    ]
+  ],
+  "ordered_pair_count": 11,
+  "relation_matrix": [
+    [
+      1,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ]
+  ],
+  "reachability_matrix": [
+    [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ]
+  ],
+  "direct_transitive_witness": [
+    "A",
+    "B",
+    "C"
+  ],
+  "components": [
+    [
+      "A",
+      "B",
+      "C"
+    ],
+    [
+      "D",
+      "E"
+    ]
+  ],
+  "closure_added_pairs": [
+    [
+      "A",
+      "C"
+    ],
+    [
+      "C",
+      "A"
+    ]
+  ],
+  "metrics": {
+    "node_count": 5,
+    "edge_count": 3,
+    "ordered_pair_count": 11,
+    "component_count": 2,
+    "isolated_count": 0,
+    "largest_component_size": 3,
+    "density": 0.3
+  },
+  "degrees": {
+    "A": 1,
+    "B": 2,
+    "C": 1,
+    "D": 1,
+    "E": 1
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "datasets": [
+    {
+      "dataset_id": "synthetic-demo-v1",
+      "kind": "synthetic",
+      "description": "Deterministic teaching prices; not market observations",
+      "source_url": null,
+      "retrieved_at": null,
+      "license_or_permission": "Generated for this course project",
+      "price_convention": "Synthetic positive prices (treated as adjusted closes)",
+      "calendar": "Plain weekday sequence; not an exchange trading calendar",
+      "date_range": [
+        "2025-01-02",
+        "2025-12-18"
+      ],
+      "generator": "scripts/generate_demo_data.py",
+      "generator_seed": 2026,
+      "generating_rule": "r = clip(0.005*common + 0.01*sector + 0.005*noise, -0.2, 0.2), standard-normal factors, compounded from 100",
+      "metadata_sha256": "e5ef32dbb43645eb56096bc6cd2c48f688a299239a271b8c8d8aa356fe3caa9b",
+      "prices_sha256": "9e5bf5b7acac4c52df1ce8f7b108b7bd5a31d1b199541ecf5eed6af98eba0885"
+    },
+    {
+      "dataset_id": "teaching-correlation-v1",
+      "kind": "synthetic_correlation",
+      "description": "Five-stock teaching correlation matrix; not market values",
+      "source_url": null,
+      "retrieved_at": null,
+      "license_or_permission": "Written for this course project",
+      "correlation_sha256": "c79d83cfb5647e01ebd3f4420e2c455d8322666dc93696fa661746d4f8341c9b",
+      "metadata_sha256": "1c36275a3d7a642281c2d375a13034c35bf9509925c7d1837ed7fa118dd9deac"
+    },
+    {
+      "dataset_id": "historical-yahoo-snapshot",
+      "kind": "historical",
+      "description": "Historical daily adjusted closes downloaded from Yahoo Finance",
+      "provider": "Yahoo Finance via the yfinance Python package (unofficial API)",
+      "source_url": "https://finance.yahoo.com/",
+      "retrieved_at": "2026-10-29T19:57:26+00:00",
+      "license_or_permission": "Yahoo Finance terms of service; downloaded for personal/educational course use. Redistribution not confirmed - do not publish the CSV files.",
+      "price_convention": "Close with auto_adjust=True (adjusted for splits and dividends)",
+      "calendar": "Trading dates as returned by the provider (US exchanges)",
+      "selection_basis": "Hand-picked large US companies in four sectors; not an index membership snapshot",
+      "requested_range": [
+        "2024-01-01",
+        "2025-12-31"
+      ],
+      "date_range": [
+        "2024-01-02",
+        "2025-12-31"
+      ],
+      "observations_per_symbol": {
+        "AAPL": 502,
+        "BAC": 502,
+        "C": 502,
+        "COP": 502,
+        "CVX": 502,
+        "GOOGL": 502,
+        "JPM": 502,
+        "KO": 502,
+        "MSFT": 502,
+        "NVDA": 502,
+        "PEP": 502,
+        "PG": 502,
+        "SLB": 502,
+        "WFC": 502,
+        "WMT": 502,
+        "XOM": 502
+      },
+      "generator": "scripts/fetch_yahoo_data.py",
+      "metadata_sha256": "510bde778858e7475fc9cdba1e16a39b7e51d9b1481cb1108a8b119c0c36f9bc",
+      "prices_sha256": "efc09c9a3d83fe4971779565c3396ed200718ed1dcfec8d0d556895e29d21975"
+    }
+  ]
+}
