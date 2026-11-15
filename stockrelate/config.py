@@ -25,7 +25,7 @@ TEACHING_PRESET_TICKS = (20, 65, 75, 90)
 class Settings:
     """Validation settings passed to pure data functions.
 
-    The Streamlit UI always uses the defaults. Unit tests may lower
+    The web UI always uses the defaults. Unit tests may lower
     ``min_return_observations`` to run small fixtures.
     """
 
